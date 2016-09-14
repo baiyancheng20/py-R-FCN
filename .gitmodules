@@ -1,0 +1,5 @@
+
+[submodule "caffe-R-FCN"]
+	path = caffe-R-FCN
+	url = https://github.com/chungjin/caffe-R-FCN
+	branch = caffe-R-FCN

@@ -51,7 +51,7 @@ R-FCN, ResNet-101 | VOC 07+12 trainval  | VOC 07 test           | 78.1% | -     
 
 ### Requirements: software
 
-0. **`Important`** Please use the [Microsoft-version Caffe(@commit 1a2be8e)](https://github.com/Microsoft/caffe/tree/1a2be8ecf9ba318d516d79187845e90ac6e73197), this Caffe supports R-FCN layer, and the prototxt in this repository follows the Microsoft-version Caffe's layer name. You need to put the Caffe root folder under py-R-FCN folder, just like what py-faster-rcnn does.
+0. **`Important`** Please use the [Caffe (@commit 645ab46)](https://github.com/chungjin/caffe-R-FCN), this Caffe supports R-FCN layer. You need to put the Caffe root folder under py-R-FCN folder, just like what py-faster-rcnn does.
 
 1. Requirements for `Caffe` and `pycaffe` (see: [Caffe installation instructions](http://caffe.berkeleyvision.org/installation.html))
 
@@ -74,7 +74,7 @@ Any NVIDIA GPU with 6GB or larger memory is OK(4GB is enough for ResNet-50).
 1.  I do not provide demo currently, I'll add it soon.
 
 ### Installation
-1. Clone the Faster R-CNN repository
+1. Clone the py-RFCN repository
   ```Shell
   git clone https://github.com/Orpine/py-R-FCN.git
   ```
@@ -83,14 +83,9 @@ Any NVIDIA GPU with 6GB or larger memory is OK(4GB is enough for ResNet-50).
 2. Clone the Caffe repository
   ```Shell
   cd $RFCN_ROOT
-  git clone https://github.com/Microsoft/caffe.git
+  git clone git@github.com:chungjin/caffe-R-FCN.git
+  mv caffe-R-FCN caffe
   ```
-  [optional] 
-  ```Shell
-  cd caffe
-  git reset --hard 1a2be8e
-  ```
-  (I only test on this commit, and I'm not sure whether this Caffe is still compatible with the prototxt in this repository in the future)
   
   If you followed the above instruction, python code will add `$RFCN_ROOT/caffe/python` to `PYTHONPATH` automatically, otherwise you need to add `$CAFFE_ROOT/python` by your own, you could check `$RFCN_ROOT/tools/_init_paths.py` for more details.
 

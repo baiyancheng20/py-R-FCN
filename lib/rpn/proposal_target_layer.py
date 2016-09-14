@@ -76,31 +76,26 @@ class ProposalTargetLayer(caffe.Layer):
             print 'ratio: {:.3f}'.format(float(self._fg_num) / float(self._bg_num))
 
         # sampled rois
-        # modified by ywxiong
         rois = rois.reshape((rois.shape[0], rois.shape[1], 1, 1))
         top[0].reshape(*rois.shape)
         top[0].data[...] = rois
 
         # classification labels
-        # modified by ywxiong
         labels = labels.reshape((labels.shape[0], 1, 1, 1))
         top[1].reshape(*labels.shape)
         top[1].data[...] = labels
 
         # bbox_targets
-        # modified by ywxiong
         bbox_targets = bbox_targets.reshape((bbox_targets.shape[0], bbox_targets.shape[1], 1, 1))
         top[2].reshape(*bbox_targets.shape)
         top[2].data[...] = bbox_targets
 
         # bbox_inside_weights
-        # modified by ywxiong
         bbox_inside_weights = bbox_inside_weights.reshape((bbox_inside_weights.shape[0], bbox_inside_weights.shape[1], 1, 1))
         top[3].reshape(*bbox_inside_weights.shape)
         top[3].data[...] = bbox_inside_weights
 
         # bbox_outside_weights
-        # modified by ywxiong
         bbox_inside_weights = bbox_inside_weights.reshape((bbox_inside_weights.shape[0], bbox_inside_weights.shape[1], 1, 1))
         top[4].reshape(*bbox_inside_weights.shape)
         top[4].data[...] = np.array(bbox_inside_weights > 0).astype(np.float32)

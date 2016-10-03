@@ -1,19 +1,19 @@
 # py-R-FCN
 R-FCN: Object Detection via Region-based Fully Convolutional Networks
 
-py-R-FCN now supports end-to-end training. 
+py-R-FCN now supports joint training. 
 
 ### Disclaimer
 
 The official R-FCN code (written in MATLAB) is available [here](https://github.com/daijifeng001/R-FCN).
 If your goal is to reproduce the results in the [NIPS 2016 paper](https://arxiv.org/abs/1605.06409), please use the [official code](https://github.com/daijifeng001/R-FCN).
 
-py-R-FCN is based on the [py-faster-rcnn code](https://github.com/rbgirshick/py-faster-rcnn )(include this README) and [the offcial R-FCN implementation](https://github.com/daijifeng001/R-FCN), and the usage is quite similar to [py-faster-rcnn](https://github.com/rbgirshick/py-faster-rcnn ), thanks for them.
+py-R-FCN is based on the [py-faster-rcnn code](https://github.com/rbgirshick/py-faster-rcnn )(include this README) and [the offcial R-FCN implementation](https://github.com/daijifeng001/R-FCN), and the usage is quite similar to [py-faster-rcnn](https://github.com/rbgirshick/py-faster-rcnn ), thanks for their great works.
 
 There are slight differences between the two implementations.
 In particular, this Python port
  - is ~10% slower at test-time, because some operations execute on the CPU in Python layers (e.g., 90ms / image vs. 99ms / image for ResNet-50)
- - gives slightly lower mAP as the MATLAB version, I'm working on it, checking whether end-to-end training suffers from OHEM, or end-to-end training needs more iteration.
+ - gives slightly lower mAP as the MATLAB version([The paper](https://arxiv.org/abs/1605.06409) mentioned that joint training with OHEM may delivers a lower accuracy(check the footnote at page 4)).
 
 #### Some modification
 
@@ -22,10 +22,12 @@ The original py-faster-rcnn uses class-aware bounding box regression. However, R
 OHEM need all rois to select the hard examples, so I changed the sample strategy, set `BATCH_SIZE: -1` for OHEM, otherwise OHEM would not take effect.
 
 In conclusion:
+
 `AGONISTIC: True` is required for class-agonistic bounding box regression
+
 `BATCH_SIZE: -1` is required for OHEM
 
-And I've already provided two configuration files for you(w/ OHEM and w/o OHEM) under experiments/cfgs folder, you could just use them and needn't change anything.
+And I've already provided two configuration files for you(w/ OHEM and w/o OHEM) under `experiments/cfgs` folder, you could just use them and needn't change anything.
 
 ### License
 
@@ -45,8 +47,8 @@ If you find R-FCN useful in your research, please consider citing:
 ### Main Results
                    | training data       | test data             | mAP   | time/img (K40) | time/img (Titian X)
 -------------------|:-------------------:|:---------------------:|:-----:|:--------------:|:------------------:|
-R-FCN, ResNet-50  | VOC 07+12 trainval  | VOC 07 test           | 76.8% | -        | 0.099sec            |
-R-FCN, ResNet-101 | VOC 07+12 trainval  | VOC 07 test           | 78.1% | -        | 0.136sec           |
+R-FCN, ResNet-50  | VOC 07+12 trainval  | VOC 07 test           | 76.9%(80k110k) | -        | 0.099sec            |
+R-FCN, ResNet-101 | VOC 07+12 trainval  | VOC 07 test           | 78.7%(80k110k) | -        | 0.136sec           |
 
 
 ### Requirements: software
@@ -70,11 +72,13 @@ R-FCN, ResNet-101 | VOC 07+12 trainval  | VOC 07 test           | 78.1% | -     
 
 Any NVIDIA GPU with 6GB or larger memory is OK(4GB is enough for ResNet-50).
 
-### Demo
-1.  I do not provide demo currently, I'll add it soon.
 
 ### Installation
+<<<<<<< HEAD
 1. Clone the py-RFCN repository
+=======
+1. Clone the R-FCN repository
+>>>>>>> rfcn/master
   ```Shell
   git clone https://github.com/Orpine/py-R-FCN.git
   ```
@@ -105,6 +109,24 @@ Any NVIDIA GPU with 6GB or larger memory is OK(4GB is enough for ResNet-50).
     # and your Makefile.config in place, then simply do:
     make -j8 && make pycaffe
    ```
+
+### Demo
+1.  To use demo you need to download the pretrained R-FCN model, please download the model manually from [OneDrive](https://1drv.ms/u/s!AoN7vygOjLIQqUWHpY67oaC7mopf), and put it under `$RFCN/data`. 
+
+    Make sure it looks like this:
+    ```Shell
+    $RFCN/data/rfcn_models/resnet50_rfcn_final.caffemodel
+    $RFCN/data/rfcn_models/resnet101_rfcn_final.caffemodel
+    ```
+
+2.  To run the demo
+  
+    ```Shell
+    $RFCN/tools/demo_rfcn.py
+    ```
+    
+  The demo performs detection using a ResNet-101 network trained for detection on PASCAL VOC 2007.
+
 
 ### Preparation for Training & Testing
 

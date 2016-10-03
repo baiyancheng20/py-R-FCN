@@ -40,6 +40,7 @@ class pascal_voc(imdb):
         self._roidb_handler = self.selective_search_roidb
         self._salt = str(uuid.uuid4())
         self._comp_id = 'comp4'
+        self._model_name = 'RFCN_Resnet101L'
 
         # PASCAL specific config options
         self.config = {'cleanup'     : True,
@@ -235,6 +236,7 @@ class pascal_voc(imdb):
             self._devkit_path,
             'results',
             'VOC' + self._year,
+            self._model_name,
             'Main',
             filename)
         return path
